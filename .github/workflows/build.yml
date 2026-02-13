@@ -47,7 +47,7 @@ jobs:
         run: npm run build
 
       - name: Build installer
-        run: npm run build:${{ matrix.platform }} -- --publish never
+        run: npx electron-builder --${{ matrix.platform }} --publish never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false

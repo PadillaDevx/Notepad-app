@@ -12,12 +12,6 @@ files:
   - '!**/*.jnote'
   - '!credentials.jnote'
   - '!userdata.jnote'
-fileAssociations:
-  - ext: jnote
-    name: JNote File
-    description: Archivo de notas cifrado
-    role: Editor
-    icon: build/jnote.icns
 asar: true
 asarUnpack:
   - resources/**
