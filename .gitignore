@@ -1,0 +1,17 @@
+node_modules
+dist
+out
+.DS_Store
+.eslintcache
+*.log*
+
+# Datos encriptados del usuario
+*.jnote
+userdata.jnote
+
+# Config del sistema (electron-store con credenciales cifradas)
+secure-config.json
+
+# Variables de entorno
+.env
+.env.*

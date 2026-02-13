@@ -1,0 +1,72 @@
+appId: com.notepad.app
+productName: Mi Notepad App
+directories:
+  buildResources: build
+files:
+  - '!**/.vscode/*'
+  - '!src/*'
+  - '!electron.vite.config.{js,ts,mjs,cjs}'
+  - '!svelte.config.mjs'
+  - '!{.eslintcache,eslint.config.mjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+  - '!**/*.jnote'
+  - '!credentials.jnote'
+  - '!userdata.jnote'
+fileAssociations:
+  - ext: jnote
+    name: JNote File
+    description: Archivo de notas cifrado
+    role: Editor
+    icon: build/jnote.icns
+asar: true
+asarUnpack:
+  - resources/**
+win:
+  executableName: notepad-app
+  icon: build/icon.ico
+  target:
+    - nsis
+    - portable
+nsis:
+  artifactName: ${name}-${version}-setup.${ext}
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  createDesktopShortcut: always
+portable:
+  artifactName: ${name}-${version}-portable.${ext}
+mac:
+  icon: build/icon.icns
+  category: public.app-category.productivity
+  entitlementsInherit: build/entitlements.mac.plist
+  extendInfo:
+    - NSCameraUsageDescription: La aplicación solicita acceso a la cámara para agregar fotos a tus notas.
+    - NSMicrophoneUsageDescription: La aplicación solicita acceso al micrófono.
+    - NSDocumentsFolderUsageDescription: La aplicación necesita acceso a la carpeta Documentos para guardar tus notas.
+    - NSDownloadsFolderUsageDescription: La aplicación necesita acceso a la carpeta Descargas.
+    - NSUserNotificationAlertStyle: alert
+  notarize: false
+dmg:
+  artifactName: ${name}-${version}.${ext}
+  title: ${productName} ${version}
+  icon: build/icon.icns
+  contents:
+    - x: 130
+      y: 220
+    - x: 410
+      y: 220
+      type: link
+      path: /Applications
+linux:
+  target:
+    - AppImage
+    - deb
+  icon: build/icon.png
+  maintainer: notepad-app
+  category: Utility
+  description: Aplicación de notas con libreta, diario y recordatorios
+appImage:
+  artifactName: ${name}-${version}.${ext}
+npmRebuild: false
+publish:
+  provider: generic
+  url: https://example.com/auto-updates
