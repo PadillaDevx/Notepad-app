@@ -1,20 +1,38 @@
 # 📝 Mi Notepad App
 
-Una aplicación multiplataforma de notas, diario y recordatorios construida con **Electron + Svelte 5**, con cifrado AES-256-GCM, contraseña maestra almacenada en el Keychain del sistema, y estilo de libreta clásica.
+[![Release](https://img.shields.io/github/v/release/PadillaDevx/Notepad-app?style=for-the-badge)](https://github.com/PadillaDevx/Notepad-app/releases)
+[![License](https://img.shields.io/github/license/PadillaDevx/Notepad-app?style=for-the-badge)](LICENSE)
+[![Downloads](https://img.shields.io/github/downloads/PadillaDevx/Notepad-app/total?style=for-the-badge)](https://github.com/PadillaDevx/Notepad-app/releases)
+
+Una aplicación multiplataforma de notas, diario y recordatorios construida con **Electron + Svelte 5**, con cifrado AES-256-GCM y almacenamiento seguro en el Keychain del sistema operativo.
+
+![Screenshot](https://via.placeholder.com/800x500?text=Screenshot+Coming+Soon)
+
+## 📥 Descargar
+
+### Última versión estable
+
+| Sistema Operativo | Descarga |
+|---|---|
+| 🪟 **Windows** | [Instalador (.exe)](https://github.com/PadillaDevx/Notepad-app/releases/latest/download/notepad-app-1.0.0-setup.exe) · [Portable](https://github.com/PadillaDevx/Notepad-app/releases/latest/download/notepad-app-1.0.0-portable.exe) |
+| 🍎 **macOS** | [Instalador (.dmg)](https://github.com/PadillaDevx/Notepad-app/releases/latest/download/notepad-app-1.0.0.dmg) |
+| 🐧 **Linux** | [AppImage](https://github.com/PadillaDevx/Notepad-app/releases/latest/download/notepad-app-1.0.0.AppImage) · [.deb](https://github.com/PadillaDevx/Notepad-app/releases/latest/download/notepad-app-1.0.0.deb) |
+
+➡️ [Ver todas las versiones](https://github.com/PadillaDevx/Notepad-app/releases)
 
 ## ✨ Características
 
-- 🔐 **Cifrado Militar**: Archivos `.jnote` protegidos con AES-256-GCM + scrypt
-- 🔑 **Contraseña Maestra**: Guardada seguramente en Keychain (macOS), DPAPI (Windows), libsecret (Linux)
-- 📓 **Estilo Libreta**: Líneas azules horizontales y márgenes rojos
-- 🔔 **Notificaciones Nativas**: Recordatorios programados
-- 📅 **Integración con Calendario**: Exporta a archivos `.ics` universales
-- 🌙 **Tema Oscuro**: Toggle entre modo claro y oscuro
-- 💾 **Sistema de Archivos Propietario**: Solo abre con la app
+- 🔐 **Cifrado Militar**: Datos protegidos con AES-256-GCM + scrypt (N=16384)
+- 🔑 **Autenticación Segura**: Credenciales en OS Keychain (macOS/Windows/Linux)
+- 🔄 **Auto-guardado**: Guardado automático cada 1.5s con debounce
+- 📓 **Editor Rico**: Texto con formato, fuentes, resaltadores, checkboxes
+- 🌙 **Tema Oscuro/Claro**: Toggle instantáneo con persistencia
+- 🔔 **Notificaciones Nativas**: Recordatorios programados del sistema
+- 📅 **Exportar Calendario**: Genera archivos `.ics` universales
+- 🛡️ **Protección Anti-Ingeniería**: DevTools bloqueados en producción
+- 🔒 **Código Abierto Seguro**: Sin claves hardcoded, sin secretos en el repo
 
-## 🚀 Comenzar
-
-### Instalación
+## 🚀 Instalación
 
 ```bash
 npm install
