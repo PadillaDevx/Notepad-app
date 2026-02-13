@@ -52,23 +52,28 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
-      - name: List dist files
-        run: ls -la dist/
-        shell: bash
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: installers-${{ matrix.platform }}
-          path: dist/*
-          if-no-files-found: warn
-
-      - name: Release
+      - name: Upload release (macOS)
+        if: matrix.platform == 'mac' && startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: dist/*
-          fail_on_unmatched_files: false
-          prerelease: false
+          files: dist/*.dmg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload release (Windows)
+        if: matrix.platform == 'win' && startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*-setup.exe
+            dist/*-portable.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload release (Linux)
+        if: matrix.platform == 'linux' && startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.AppImage
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
