@@ -15,6 +15,7 @@ files:
 asar: true
 asarUnpack:
   - resources/**
+afterPack: ./scripts/afterPack.cjs
 win:
   executableName: notepad-app
   icon: build/icon.ico
@@ -33,6 +34,7 @@ mac:
   category: public.app-category.productivity
   target:
     - dmg
+  identity: null
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
     - NSCameraUsageDescription: La aplicación solicita acceso a la cámara para agregar fotos a tus notas.
