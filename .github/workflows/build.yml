@@ -16,7 +16,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
+        include:
+          - os: macos-latest
+            platform: mac
+          - os: windows-latest
+            platform: win
+          - os: ubuntu-latest
+            platform: linux
 
     steps:
       - name: Checkout code
@@ -28,51 +34,40 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install dependencies (Linux)
+        if: matrix.platform == 'linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libarchive-tools
+
+      - name: Install npm dependencies
         run: npm ci
 
-      - name: Build app
+      - name: Build Electron app
         run: npm run build
 
-      - name: Build installers (macOS)
-        if: matrix.os == 'macos-latest'
-        run: |
-          npm run build:mac -- --publish never
+      - name: Build installer
+        run: npm run build:${{ matrix.platform }} -- --publish never
         env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
 
-      - name: Build installers (Windows)
-        if: matrix.os == 'windows-latest'
-        run: |
-          npm run build:win -- --publish never
-        env:
-          CSC_LINK: ''
-          CSC_KEY_PASSWORD: ''
-
-      - name: Build installers (Linux)
-        if: matrix.os == 'ubuntu-latest'
-        run: npm run build:linux -- --publish never
+      - name: List dist files
+        run: ls -la dist/
+        shell: bash
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: installers-${{ matrix.os }}
-          path: |
-            dist/*.exe
-            dist/*.dmg
-            dist/*.AppImage
-            dist/*.deb
-          if-no-files-found: ignore
+          name: installers-${{ matrix.platform }}
+          path: dist/*
+          if-no-files-found: warn
 
       - name: Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: |
-            dist/*.exe
-            dist/*.dmg
-            dist/*.AppImage
-            dist/*.deb
+          files: dist/*
           fail_on_unmatched_files: false
           prerelease: false
         env:
