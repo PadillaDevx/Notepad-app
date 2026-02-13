@@ -1,16 +1,62 @@
 <script>
   import { appStore } from '../stores/app.svelte.js'
+
+  let { onsave, onlogout } = $props()
+  let showUserMenu = $state(false)
+  let saving = $state(false)
+
+  async function handleSave() {
+    saving = true
+    try {
+      await onsave?.()
+    } finally {
+      setTimeout(() => saving = false, 600)
+    }
+  }
+
+  function handleLogout() {
+    showUserMenu = false
+    onlogout?.()
+  }
+
+  function toggleUserMenu() {
+    showUserMenu = !showUserMenu
+  }
 </script>
+
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+{#if showUserMenu}
+  <div class="menu-overlay" onclick={() => showUserMenu = false}></div>
+{/if}
 
 <header>
   <div class="header-left">
     <h1>📝 Mi Notepad App</h1>
     {#if appStore.username}
-      <span class="file-badge">👤 {appStore.username}</span>
+      <div class="user-menu-container">
+        <button class="user-badge" onclick={toggleUserMenu} title="Menú de usuario">
+          👤 {appStore.username}
+        </button>
+        {#if showUserMenu}
+          <div class="user-dropdown">
+            <button class="dropdown-item logout" onclick={handleLogout}>
+              🚪 Cerrar sesión
+            </button>
+          </div>
+        {/if}
+      </div>
     {/if}
   </div>
 
   <div class="header-right">
+    <button class="save-btn" onclick={handleSave} title="Guardar (Ctrl+S)" class:saved={saving}>
+      {#if saving}
+        ✅
+      {:else}
+        💾
+      {/if}
+    </button>
     <button class="theme-toggle" onclick={() => appStore.toggleDarkMode()} title="Cambiar tema">
       <span class="theme-icon">
         {#if appStore.darkMode}
@@ -60,20 +106,109 @@
     white-space: nowrap;
   }
 
-  .file-badge {
+  .user-menu-container {
+    position: relative;
+  }
+
+  .user-badge {
     font-size: 0.85rem;
-    opacity: 0.95;
     background: rgba(255, 255, 255, 0.15);
     padding: 0.35rem 0.9rem;
     border-radius: 20px;
     backdrop-filter: blur(10px);
     white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .user-badge:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  .user-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    background: #1a1a2e;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    min-width: 160px;
+    z-index: 1000;
+    animation: dropIn 0.15s ease;
+  }
+
+  @keyframes dropIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 0.7rem 1rem;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s;
+  }
+
+  .dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .dropdown-item.logout:hover {
+    background: rgba(220, 53, 69, 0.3);
+  }
+
+  .menu-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
   }
 
   .header-right {
     display: flex;
     gap: 0.75rem;
     align-items: center;
+  }
+
+  .save-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.2),
+      inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  }
+
+  .save-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+  }
+
+  .save-btn:active {
+    transform: translateY(0);
+  }
+
+  .save-btn.saved {
+    background: rgba(40, 167, 69, 0.4);
+    border-color: rgba(40, 167, 69, 0.6);
   }
 
   .theme-toggle {
@@ -130,10 +265,6 @@
 
     .header-left h1 {
       font-size: 1.1rem;
-    }
-
-    .file-badge {
-      display: none;
     }
 
     .theme-toggle {

@@ -21,6 +21,14 @@ const api = {
     save: (data) => ipcRenderer.invoke('data:save', data)
   },
 
+  // Guardar antes de cerrar
+  onSaveBeforeQuit: (callback) => {
+    ipcRenderer.on('app:save-before-quit', async () => {
+      await callback()
+      ipcRenderer.send('app:save-done')
+    })
+  },
+
   // File operations (import/export .jnote)
   file: {
     new: () => ipcRenderer.invoke('file:new'),

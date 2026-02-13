@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow } from 'electron'
+import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -96,6 +96,24 @@ app.whenReady().then(() => {
 
   registerNotificationHandlers(win)
   createTray(win)
+
+  // ── Guardar datos antes de cerrar la app ──
+  ipcMain.on('app:save-done', () => {
+    app.isQuitting = true
+    app.quit()
+  })
+
+  app.on('before-quit', (e) => {
+    if (!app.isQuitting && win && !win.isDestroyed()) {
+      e.preventDefault()
+      win.webContents.send('app:save-before-quit')
+      // Timeout de seguridad: si el renderer no responde en 3s, forzar quit
+      setTimeout(() => {
+        app.isQuitting = true
+        app.quit()
+      }, 3000)
+    }
+  })
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

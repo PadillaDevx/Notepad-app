@@ -24,6 +24,21 @@
     // Verificar si existe un usuario registrado
     userExists = await window.api.auth.hasUser()
     authChecked = true
+
+    // Escuchar petición de guardar antes de cerrar la app
+    window.api.onSaveBeforeQuit(async () => {
+      if (appStore.isAuthenticated) {
+        await saveAllData()
+      }
+    })
+
+    // Ctrl+S / Cmd+S para guardar
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault()
+        if (appStore.isAuthenticated) saveAllData()
+      }
+    })
   })
 
   // ─── Auto-save debounced (1.5s después del último cambio) ───
@@ -70,6 +85,13 @@
 
     appStore.setInitialized()
   }
+
+  async function handleLogout() {
+    // Guardar antes de cerrar sesión
+    await saveAllData()
+    appStore.logout()
+    userExists = true
+  }
 </script>
 
 {#if !authChecked}
@@ -83,7 +105,7 @@
   />
 {:else if appStore.isInitialized}
   <div id="app">
-    <Header />
+    <Header onsave={saveAllData} onlogout={handleLogout} />
 
     <NavigationTabs />
 
