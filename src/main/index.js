@@ -22,7 +22,7 @@ function createWindow() {
     height: 800,
     show: false,
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    icon,
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
@@ -90,6 +90,11 @@ app.whenReady().then(() => {
   registerAuthHandlers()
   registerFileHandlers()
   registerCalendarHandlers()
+
+  // Fijar ícono del dock en macOS
+  if (process.platform === 'darwin') {
+    app.dock.setIcon(icon)
+  }
 
   // Crear ventana principal
   const win = createWindow()

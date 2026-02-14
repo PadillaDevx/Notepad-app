@@ -98,10 +98,10 @@ class NotesStore {
   }
 
   /**
-   * Exporta notas para guardar
+   * Exporta notas para guardar (snapshot plano, sin proxies reactivos)
    */
   toData() {
-    return this.notes;
+    return $state.snapshot(this.notes);
   }
 
   /**

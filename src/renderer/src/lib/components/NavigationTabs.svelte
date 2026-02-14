@@ -8,7 +8,20 @@
     class:active={appStore.activeTab === 'notes'}
     onclick={() => appStore.setActiveTab('notes')}
   >
-    <span class="tab-icon">📝</span>
+    <span class="tab-icon"
+      ><svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        ><path d="M12 20h9" /><path
+          d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"
+        /></svg
+      ></span
+    >
     <span class="tab-label">Notas</span>
   </button>
 
@@ -17,7 +30,20 @@
     class:active={appStore.activeTab === 'diary'}
     onclick={() => appStore.setActiveTab('diary')}
   >
-    <span class="tab-icon">📖</span>
+    <span class="tab-icon"
+      ><svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        ><path d="M4 19.5A2.5 2.5 0 016.5 17H20" /><path
+          d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"
+        /></svg
+      ></span
+    >
     <span class="tab-label">Diario</span>
   </button>
 
@@ -26,7 +52,20 @@
     class:active={appStore.activeTab === 'reminders'}
     onclick={() => appStore.setActiveTab('reminders')}
   >
-    <span class="tab-icon">🔔</span>
+    <span class="tab-icon"
+      ><svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        ><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" /><path
+          d="M13.73 21a2 2 0 01-3.46 0"
+        /></svg
+      ></span
+    >
     <span class="tab-label">Recordatorios</span>
   </button>
 </nav>
@@ -88,8 +127,15 @@
   }
 
   .tab-icon {
-    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+  }
+
+  .tab-icon svg {
+    width: 18px;
+    height: 18px;
   }
 
   .tab-label {
@@ -114,7 +160,12 @@
     }
 
     .tab-icon {
-      font-size: 1.4rem;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+    }
+
+    .tab-icon svg {
+      width: 22px;
+      height: 22px;
     }
   }
 </style>

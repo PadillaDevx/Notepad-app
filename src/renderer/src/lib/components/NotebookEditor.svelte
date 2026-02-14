@@ -183,7 +183,7 @@
       oninput={handleInput}
       onclick={handleEditorClick}
       onkeydown={handleEditorClick}
-      data-placeholder="Escribe aquí tus notas... Usa [] para crear checkboxes ✓"
+      data-placeholder="Escribe aquí tus notas... Usa [] para crear checkboxes"
     ></div>
   </div>
 </div>

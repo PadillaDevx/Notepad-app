@@ -1,5 +1,5 @@
 appId: com.notepad.app
-productName: Mi Notepad App
+productName: Mi Notepad
 directories:
   buildResources: build
 files:

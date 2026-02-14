@@ -101,10 +101,10 @@ class DiaryStore {
   }
 
   /**
-   * Exporta entradas para guardar
+   * Exporta entradas para guardar (snapshot plano, sin proxies reactivos)
    */
   toData() {
-    return this.entries;
+    return $state.snapshot(this.entries);
   }
 
   /**

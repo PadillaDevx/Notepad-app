@@ -57,7 +57,12 @@
         diary: diaryStore.toData(),
         reminders: remindersStore.toData()
       }
-      await window.api.data.save(data)
+      const result = await window.api.data.save(data)
+      if (result?.success) {
+        console.log('[auto-save] Datos guardados correctamente')
+      } else {
+        console.error('[auto-save] Fallo al guardar:', result?.error)
+      }
     } catch (e) {
       console.error('Error al guardar datos:', e)
     }
@@ -119,14 +124,42 @@
 
       {#if appStore.activeTab === 'diary'}
         <div class="notebook-container">
-          <h2>📖 Diario (Próximamente)</h2>
+          <h2>
+            <svg
+              style="width:28px;height:28px;vertical-align:middle;margin-right:6px"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><path d="M4 19.5A2.5 2.5 0 016.5 17H20" /><path
+                d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"
+              /></svg
+            >Diario (Próximamente)
+          </h2>
           <p>Función de diario con páginas y animación en desarrollo...</p>
         </div>
       {/if}
 
       {#if appStore.activeTab === 'reminders'}
         <div class="notebook-container">
-          <h2>🔔 Recordatorios (Próximamente)</h2>
+          <h2>
+            <svg
+              style="width:28px;height:28px;vertical-align:middle;margin-right:6px"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" /><path
+                d="M13.73 21a2 2 0 01-3.46 0"
+              /></svg
+            >Recordatorios (Próximamente)
+          </h2>
           <p>Función de recordatorios con calendario en desarrollo...</p>
         </div>
       {/if}

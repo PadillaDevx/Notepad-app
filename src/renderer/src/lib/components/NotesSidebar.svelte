@@ -50,7 +50,21 @@
 
 <aside class="sidebar">
   <div class="sidebar-header">
-    <h2>📝 Mis Notas</h2>
+    <h2>
+      <svg
+        class="icon-sidebar"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        ><path d="M12 20h9" /><path
+          d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"
+        /></svg
+      > Mis Notas
+    </h2>
     <button class="btn-add" onclick={handleAddNote} title="Agregar nueva nota">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
         <path
@@ -85,7 +99,19 @@
               onclick={(e) => handleDeleteNote(note.id, e)}
               title="Eliminar nota"
             >
-              🗑️
+              <svg
+                class="icon-trash"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><polyline points="3 6 5 6 21 6" /><path
+                  d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"
+                /></svg
+              >
             </button>
           </div>
           <p class="note-preview">{truncateText(note.content)}</p>
@@ -125,6 +151,15 @@
     font-weight: 700;
     margin: 0;
     color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .icon-sidebar {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
   }
 
   .btn-add {
@@ -229,10 +264,17 @@
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1rem;
     padding: 0.25rem;
     opacity: 0;
     transition: all 0.2s ease;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+  }
+
+  .icon-trash {
+    width: 16px;
+    height: 16px;
   }
 
   .note-item:hover .btn-delete {

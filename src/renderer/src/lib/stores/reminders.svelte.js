@@ -158,10 +158,10 @@ class RemindersStore {
   }
 
   /**
-   * Exporta recordatorios para guardar
+   * Exporta recordatorios para guardar (snapshot plano, sin proxies reactivos)
    */
   toData() {
-    return this.reminders;
+    return $state.snapshot(this.reminders);
   }
 
   /**

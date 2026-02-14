@@ -10,7 +10,7 @@
     try {
       await onsave?.()
     } finally {
-      setTimeout(() => saving = false, 600)
+      setTimeout(() => (saving = false), 600)
     }
   }
 
@@ -27,21 +27,63 @@
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 {#if showUserMenu}
-  <div class="menu-overlay" onclick={() => showUserMenu = false}></div>
+  <div class="menu-overlay" onclick={() => (showUserMenu = false)}></div>
 {/if}
 
 <header>
   <div class="header-left">
-    <h1>📝 Mi Notepad App</h1>
+    <h1>
+      <svg
+        class="icon-h"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        ><path d="M12 20h9" /><path
+          d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"
+        /></svg
+      > Mi Notepad
+    </h1>
     {#if appStore.username}
       <div class="user-menu-container">
         <button class="user-badge" onclick={toggleUserMenu} title="Menú de usuario">
-          👤 {appStore.username}
+          <svg
+            class="icon-sm"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            ><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" /><circle
+              cx="12"
+              cy="7"
+              r="4"
+            /></svg
+          >
+          {appStore.username}
         </button>
         {#if showUserMenu}
           <div class="user-dropdown">
             <button class="dropdown-item logout" onclick={handleLogout}>
-              🚪 Cerrar sesión
+              <svg
+                class="icon-sm"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                ><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" /><polyline
+                  points="16 17 21 12 16 7"
+                /><line x1="21" y1="12" x2="9" y2="12" /></svg
+              >
+              Cerrar sesión
             </button>
           </div>
         {/if}
@@ -52,9 +94,30 @@
   <div class="header-right">
     <button class="save-btn" onclick={handleSave} title="Guardar (Ctrl+S)" class:saved={saving}>
       {#if saving}
-        ✅
+        <svg
+          class="icon-btn"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"><polyline points="20 6 9 17 4 12" /></svg
+        >
       {:else}
-        💾
+        <svg
+          class="icon-btn"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" /><polyline
+            points="17 21 17 13 7 13 7 21"
+          /><polyline points="7 3 7 8 15 8" /></svg
+        >
       {/if}
     </button>
     <button class="theme-toggle" onclick={() => appStore.toggleDarkMode()} title="Cambiar tema">
@@ -104,6 +167,27 @@
     margin: 0;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .icon-h {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+  }
+
+  .icon-sm {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    vertical-align: middle;
+  }
+
+  .icon-btn {
+    width: 20px;
+    height: 20px;
   }
 
   .user-menu-container {
@@ -121,6 +205,9 @@
     color: white;
     cursor: pointer;
     transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
   }
 
   .user-badge:hover {
@@ -141,12 +228,20 @@
   }
 
   @keyframes dropIn {
-    from { opacity: 0; transform: translateY(-6px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .dropdown-item {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     width: 100%;
     padding: 0.7rem 1rem;
     background: none;
