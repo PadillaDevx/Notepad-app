@@ -9,6 +9,7 @@ import { registerFileHandlers } from './ipc/file-handlers.js'
 import { registerNotificationHandlers } from './ipc/notification-handlers.js'
 import { registerCalendarHandlers } from './ipc/calendar-handlers.js'
 import { createTray, destroyTray } from './services/tray.js'
+import { setupAutoUpdater } from './services/updater.js'
 
 // Bandera global para controlar el quit
 app.isQuitting = false
@@ -101,6 +102,9 @@ app.whenReady().then(() => {
 
   registerNotificationHandlers(win)
   createTray(win)
+
+  // ── Auto-updater: busca actualizaciones en GitHub Releases ──
+  setupAutoUpdater()
 
   // ── Guardar datos antes de cerrar la app ──
   ipcMain.on('app:save-done', () => {

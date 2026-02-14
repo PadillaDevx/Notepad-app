@@ -21,8 +21,20 @@ class AppStore {
   // Flag de inicialización
   isInitialized = $state(false);
 
-  // Tema oscuro
-  darkMode = $state(false);
+  // Tema oscuro – se inicializa desde localStorage o del tema del SO
+  darkMode = $state(this._getInitialTheme());
+
+  /**
+   * Determina el tema inicial: localStorage > preferencia del SO
+   */
+  _getInitialTheme() {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('mi-notepad-dark-mode');
+      if (saved !== null) return saved === 'true';
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return false;
+  }
 
   // Contador de versión de datos - se incrementa en cada cambio, dispara auto-save
   dataVersion = $state(0);
@@ -85,12 +97,15 @@ class AppStore {
   }
 
   /**
-   * Toggle tema oscuro
+   * Toggle tema oscuro y guardar preferencia
    */
   toggleDarkMode() {
     this.darkMode = !this.darkMode;
     if (typeof document !== 'undefined') {
       document.documentElement.classList.toggle('dark', this.darkMode);
+    }
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('mi-notepad-dark-mode', String(this.darkMode));
     }
   }
 }

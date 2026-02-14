@@ -34,6 +34,7 @@ mac:
   category: public.app-category.productivity
   target:
     - dmg
+    - zip
   identity: null
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
@@ -64,3 +65,7 @@ linux:
 appImage:
   artifactName: ${name}-${version}.${ext}
 npmRebuild: false
+publish:
+  provider: github
+  owner: PadillaDevx
+  repo: Notepad-app

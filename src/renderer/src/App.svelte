@@ -16,10 +16,8 @@
   let userExists = $state(false)
 
   onMount(async () => {
-    // Aplicar tema inicial
-    if (appStore.darkMode) {
-      document.documentElement.classList.add('dark')
-    }
+    // Aplicar tema inicial (persiste en localStorage, fallback al tema del SO)
+    document.documentElement.classList.toggle('dark', appStore.darkMode)
 
     // Verificar si existe un usuario registrado
     userExists = await window.api.auth.hasUser()

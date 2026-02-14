@@ -26,6 +26,7 @@
     "@tiptap/pm": "^3.19.0",
     "@tiptap/starter-kit": "^3.19.0",
     "electron-store": "^11.0.2",
+    "electron-updater": "^6.7.3",
     "ical-generator": "^10.0.0",
     "node-schedule": "^2.1.1",
     "svelte-tiptap": "^3.0.1",
